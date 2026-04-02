@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Los Casos del Latín</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #ffffff; color: #1a1a1a; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .wrap { padding: 1rem 0; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 14px; color: #666; margin-bottom: 1.5rem; }
+  .nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 1.75rem; }
+  .nav-link { font-size: 12px; color: #185FA5; text-decoration: none; padding: 4px 10px; border-radius: 6px; border: 0.5px solid rgba(0,0,0,0.15); }
+  .nav-link:hover { background: #E6F1FB; }
+  .nav-link.active { background: #E6F1FB; font-weight: 500; pointer-events: none; }
+  .nav-sep { color: #ccc; font-size: 12px; }
+
+  .intro-note { background: #f7f7f5; border-left: 2px solid #378ADD; padding: 10px 14px; font-size: 12px; color: #555; margin-bottom: 1.75rem; line-height: 1.6; border-radius: 0 6px 6px 0; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  @media (max-width: 560px) { .grid2 { grid-template-columns: 1fr; } }
+
+  /* Case cards */
+  .case-card { border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; }
+  .case-head { padding: 12px 16px; border-bottom: 0.5px solid rgba(0,0,0,0.1); }
+  .case-head .case-num { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; }
+  .case-head h2 { font-size: 17px; font-weight: 500; margin-bottom: 2px; }
+  .case-head .case-question { font-size: 12px; font-style: italic; }
+  .case-body { padding: 14px 16px; }
+  .func-list { list-style: none; margin-bottom: 12px; }
+  .func-list li { font-size: 12.5px; color: #333; padding: 3px 0; border-bottom: 0.5px solid rgba(0,0,0,0.06); line-height: 1.5; }
+  .func-list li:last-child { border-bottom: none; }
+  .func-list li::before { content: "›"; margin-right: 6px; font-weight: 600; }
+  .func-esp { font-size: 11px; color: #888; font-style: italic; }
+
+  /* Per-case color themes */
+  .nom .case-head { background: #E6F1FB; }
+  .nom .case-head .case-num, .nom .case-head .case-question { color: #0C447C; }
+  .nom .case-head h2 { color: #0C447C; }
+  .nom .func-list li::before { color: #185FA5; }
+
+  .gen .case-head { background: #E1F5EE; }
+  .gen .case-head .case-num, .gen .case-head .case-question { color: #085041; }
+  .gen .case-head h2 { color: #085041; }
+  .gen .func-list li::before { color: #0F6E56; }
+
+  .dat .case-head { background: #EEEDFE; }
+  .dat .case-head .case-num, .dat .case-head .case-question { color: #3C3489; }
+  .dat .case-head h2 { color: #3C3489; }
+  .dat .func-list li::before { color: #3C3489; }
+
+  .ac .case-head { background: #FAECE7; }
+  .ac .case-head .case-num, .ac .case-head .case-question { color: #712B13; }
+  .ac .case-head h2 { color: #712B13; }
+  .ac .func-list li::before { color: #A03B1A; }
+
+  .voc .case-head { background: #FAEEDA; }
+  .voc .case-head .case-num, .voc .case-head .case-question { color: #633806; }
+  .voc .case-head h2 { color: #633806; }
+  .voc .func-list li::before { color: #854F0B; }
+
+  .abl .case-head { background: #EEF0F6; }
+  .abl .case-head .case-num, .abl .case-head .case-question { color: #353D5E; }
+  .abl .case-head h2 { color: #353D5E; }
+  .abl .func-list li::before { color: #4A547A; }
+
+  /* Examples inside case cards */
+  .example { background: #f7f7f5; border-radius: 8px; padding: 10px 12px; margin-top: 10px; }
+  .example + .example { margin-top: 8px; }
+  .latin { font-family: Georgia, serif; font-size: 13.5px; color: #1a1a1a; margin: 0 0 2px; font-style: italic; }
+  .esp { font-size: 12px; color: #666; margin: 0 0 5px; }
+  .analysis { font-size: 11px; color: #aaa; border-top: 0.5px solid rgba(0,0,0,0.1); padding-top: 5px; line-height: 1.6; }
+  .hl-nom { color: #185FA5; font-weight: 500; }
+  .hl-gen { color: #0F6E56; font-weight: 500; }
+  .hl-dat { color: #3C3489; font-weight: 500; }
+  .hl-ac  { color: #A03B1A; font-weight: 500; }
+  .hl-voc { color: #854F0B; font-weight: 500; }
+  .hl-abl { color: #4A547A; font-weight: 500; }
+
+  /* Summary table */
+  .section-title { font-size: 13px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  .sum-table-wrap { border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th { background: #f7f7f5; color: #666; font-weight: 500; padding: 8px 12px; text-align: left; border-bottom: 0.5px solid rgba(0,0,0,0.12); }
+  td { padding: 8px 12px; border-bottom: 0.5px solid rgba(0,0,0,0.08); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .sum-caso { font-weight: 500; }
+  .sum-preg { font-style: italic; color: #555; }
+  .sum-esp { color: #555; }
+  td .chip { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 500; }
+  .chip-nom { background: #E6F1FB; color: #0C447C; }
+  .chip-gen { background: #E1F5EE; color: #085041; }
+  .chip-dat { background: #EEEDFE; color: #3C3489; }
+  .chip-ac  { background: #FAECE7; color: #712B13; }
+  .chip-voc { background: #FAEEDA; color: #633806; }
+  .chip-abl { background: #EEF0F6; color: #353D5E; }
+  .ejercicios { margin-top: 2.5rem; border-top: 0.5px solid rgba(0,0,0,0.1); padding-top: 1.5rem; }
+  .ejercicios-titulo { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 1rem; }
+  .ejercicio-card { border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; margin-bottom: 0.75rem; }
+  .ejercicio-head { background: #f7f7f5; border-bottom: 0.5px solid rgba(0,0,0,0.12); padding: 7px 14px; }
+  .ejercicio-head span { font-size: 11px; font-weight: 500; color: #888; }
+  .ejercicio-body { padding: 12px 14px; }
+  .ejercicio-p { font-size: 13px; color: #1a1a1a; line-height: 1.7; margin-bottom: 10px; }
+  .ejercicio-p em { font-family: Georgia, serif; }
+  .ejercicio-p strong { color: #185FA5; }
+  .btn-sol { font-size: 12px; color: #185FA5; background: #E6F1FB; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; font-family: inherit; font-weight: 500; }
+  .btn-sol:hover { background: #d0e6f7; }
+  .solucion { display: none; margin-top: 10px; background: #f7f7f5; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; color: #333; line-height: 1.7; border-left: 2px solid #378ADD; }
+  .solucion em { font-family: Georgia, serif; font-style: italic; }
+  .sol-hl { color: #185FA5; font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-link">← Inicio</a>
+    <span class="nav-sep">|</span>
+    <a href="primera_declinacion_rosa.html" class="nav-link">1ª — rosa, rosae</a>
+    <a href="segunda_declinacion_lupus.html" class="nav-link">2ª — lupus, lupi</a>
+    <a href="tercera_declinacion_rex.html" class="nav-link">3ª — rex, regis</a>
+    <a href="casos.html" class="nav-link active">Casos</a>
+  </nav>
+
+  <h1>Los casos del latín</h1>
+  <p class="subtitle">Funciones gramaticales de cada caso y cómo identificarlos</p>
+
+  <div class="intro-note">
+    En latín, la <strong>terminación de una palabra</strong> indica su función en la oración. A diferencia del español, donde el orden de las palabras indica quién hace qué, en latín es la <strong>desinencia (caso)</strong> la que lo determina. Por eso <em>Lupus agnum videt</em> y <em>Agnum lupus videt</em> significan lo mismo: el lobo ve al cordero.
+  </div>
+
+  <div class="grid2">
+
+    <!-- NOMINATIVO -->
+    <div class="case-card nom">
+      <div class="case-head">
+        <div class="case-num">1° caso</div>
+        <h2>Nominativo</h2>
+        <div class="case-question">¿Quién? ¿Qué (hace la acción)?</div>
+      </div>
+      <div class="case-body">
+        <ul class="func-list">
+          <li><strong>Sujeto</strong> del verbo <span class="func-esp">— quien realiza o padece la acción</span></li>
+          <li><strong>Predicado nominal</strong> <span class="func-esp">— con verbos copulativos como <em>esse</em> (ser/estar)</span></li>
+        </ul>
+        <div class="example">
+          <p class="latin"><span class="hl-nom">Rosa</span> in horto pulchra est.</p>
+          <p class="esp">"La rosa en el jardín es hermosa."</p>
+          <p class="analysis"><span class="hl-nom">Rosa</span> = nominativo sg. · sujeto de <em>est</em></p>
+        </div>
+        <div class="example">
+          <p class="latin"><span class="hl-nom">Lupus</span> agnum videt.</p>
+          <p class="esp">"El lobo ve al cordero."</p>
+          <p class="analysis"><span class="hl-nom">Lupus</span> = nominativo sg. · sujeto de <em>videt</em></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- GENITIVO -->
+    <div class="case-card gen">
+      <div class="case-head">
+        <div class="case-num">2° caso</div>
+        <h2>Genitivo</h2>
+        <div class="case-question">¿De quién? ¿De qué?</div>
+      </div>
+      <div class="case-body">
+        <ul class="func-list">
+          <li><strong>Complemento del nombre</strong> <span class="func-esp">— posesión o relación entre sustantivos</span></li>
+          <li><strong>Genitivo partitivo</strong> <span class="func-esp">— indica el todo del que se toma una parte</span></li>
+          <li><strong>Genitivo objetivo/subjetivo</strong> <span class="func-esp">— con sustantivos verbales</span></li>
+        </ul>
+        <div class="example">
+          <p class="latin">Odor <span class="hl-gen">rosae</span> suavis est.</p>
+          <p class="esp">"El olor de la rosa es dulce."</p>
+          <p class="analysis"><span class="hl-gen">Rosae</span> = genitivo sg. · modifica al sustantivo <em>odor</em></p>
+        </div>
+        <div class="example">
+          <p class="latin">Nomen <span class="hl-gen">regis</span> notum est.</p>
+          <p class="esp">"El nombre del rey es conocido."</p>
+          <p class="analysis"><span class="hl-gen">Regis</span> = genitivo sg. · posesión sobre <em>nomen</em></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATIVO -->
+    <div class="case-card dat">
+      <div class="case-head">
+        <div class="case-num">3° caso</div>
+        <h2>Dativo</h2>
+        <div class="case-question">¿A quién? ¿Para quién?</div>
+      </div>
+      <div class="case-body">
+        <ul class="func-list">
+          <li><strong>Objeto indirecto</strong> <span class="func-esp">— destinatario o beneficiario de la acción</span></li>
+          <li><strong>Dativo de interés</strong> <span class="func-esp">— persona afectada por la acción</span></li>
+          <li><strong>Con ciertos verbos</strong> <span class="func-esp">— <em>credere, parere, nocere</em> rigen dativo</span></li>
+        </ul>
+        <div class="example">
+          <p class="latin">Puella <span class="hl-dat">rosae</span> aquam dat.</p>
+          <p class="esp">"La niña le da agua a la rosa."</p>
+          <p class="analysis"><span class="hl-dat">Rosae</span> = dativo sg. · receptor del verbo <em>dat</em></p>
+        </div>
+        <div class="example">
+          <p class="latin">Consul <span class="hl-dat">civibus</span> respondet.</p>
+          <p class="esp">"El cónsul responde a los ciudadanos."</p>
+          <p class="analysis"><span class="hl-dat">Civibus</span> = dativo pl. · <em>respondere</em> rige dativo</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACUSATIVO -->
+    <div class="case-card ac">
+      <div class="case-head">
+        <div class="case-num">4° caso</div>
+        <h2>Acusativo</h2>
+        <div class="case-question">¿Qué (recibe la acción)? ¿Hacia dónde?</div>
+      </div>
+      <div class="case-body">
+        <ul class="func-list">
+          <li><strong>Objeto directo</strong> <span class="func-esp">— quien recibe directamente la acción del verbo</span></li>
+          <li><strong>Complemento de lugar — dirección</strong> <span class="func-esp">— con <em>in, ad, per</em> + acusativo</span></li>
+          <li><strong>Acusativo de extensión</strong> <span class="func-esp">— duración de tiempo o distancia</span></li>
+        </ul>
+        <div class="example">
+          <p class="latin">Poeta <span class="hl-ac">rosam</span> amat.</p>
+          <p class="esp">"El poeta ama la rosa."</p>
+          <p class="analysis"><span class="hl-ac">Rosam</span> = acusativo sg. · objeto directo de <em>amat</em></p>
+        </div>
+        <div class="example">
+          <p class="latin">Milites in <span class="hl-ac">urbem</span> intrant.</p>
+          <p class="esp">"Los soldados entran en la ciudad."</p>
+          <p class="analysis"><span class="hl-ac">Urbem</span> = acusativo sg. · dirección con <em>in</em></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VOCATIVO -->
+    <div class="case-card voc">
+      <div class="case-head">
+        <div class="case-num">5° caso</div>
+        <h2>Vocativo</h2>
+        <div class="case-question">¡Oh...! ¿A quién se llama o interpela?</div>
+      </div>
+      <div class="case-body">
+        <ul class="func-list">
+          <li><strong>Llamada o interpelación directa</strong> <span class="func-esp">— dirigirse a alguien por su nombre</span></li>
+          <li><strong>Suele ir con <em>O</em></strong> <span class="func-esp">— partícula exclamativa opcional</span></li>
+          <li><strong>Idéntico al nominativo</strong> <span class="func-esp">— excepto en 2ª declinación en -<em>e</em></span></li>
+        </ul>
+        <div class="example">
+          <p class="latin">O <span class="hl-voc">Marce</span>, quid agis?</p>
+          <p class="esp">"¡Oh Marco, qué estás haciendo?"</p>
+          <p class="analysis"><span class="hl-voc">Marce</span> = vocativo sg. de <em>Marcus</em> · termina en -<em>e</em>, no en -<em>us</em></p>
+        </div>
+        <div class="example">
+          <p class="latin">Audi, <span class="hl-voc">fili</span>!</p>
+          <p class="esp">"¡Escucha, hijo!"</p>
+          <p class="analysis"><span class="hl-voc">Fili</span> = vocativo sg. de <em>filius</em> · en -<em>i</em> por contracción</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABLATIVO -->
+    <div class="case-card abl">
+      <div class="case-head">
+        <div class="case-num">6° caso</div>
+        <h2>Ablativo</h2>
+        <div class="case-question">¿Con qué? ¿Cómo? ¿Dónde? ¿Por quién?</div>
+      </div>
+      <div class="case-body">
+        <ul class="func-list">
+          <li><strong>Complemento de medio o instrumento</strong> <span class="func-esp">— con qué se hace algo</span></li>
+          <li><strong>Complemento de modo</strong> <span class="func-esp">— cómo se realiza la acción</span></li>
+          <li><strong>Complemento de lugar — posición</strong> <span class="func-esp">— con <em>in, sub, cum</em> + ablativo</span></li>
+          <li><strong>Complemento agente</strong> <span class="func-esp">— en voz pasiva: <em>a/ab</em> + ablativo</span></li>
+          <li><strong>Ablativo absoluto</strong> <span class="func-esp">— construcción participial independiente</span></li>
+        </ul>
+        <div class="example">
+          <p class="latin">Cum <span class="hl-abl">rosā</span> ambulat puella.</p>
+          <p class="esp">"La niña camina con la rosa."</p>
+          <p class="analysis"><span class="hl-abl">Rosā</span> = ablativo sg. · compañía con <em>cum</em></p>
+        </div>
+        <div class="example">
+          <p class="latin">Rex a <span class="hl-abl">militibus</span> laudatur.</p>
+          <p class="esp">"El rey es alabado por los soldados."</p>
+          <p class="analysis"><span class="hl-abl">Militibus</span> = ablativo pl. · agente en voz pasiva con <em>a</em></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Summary table -->
+  <p class="section-title">Resumen de los seis casos</p>
+  <div class="sum-table-wrap">
+    <table>
+      <tr>
+        <th style="width:16%">Caso</th>
+        <th style="width:24%">Pregunta clave</th>
+        <th style="width:28%">Función principal</th>
+        <th>Equivalente en español</th>
+      </tr>
+      <tr>
+        <td><span class="chip chip-nom">Nominativo</span></td>
+        <td class="sum-preg">¿Quién?</td>
+        <td class="sum-esp">Sujeto / predicado nominal</td>
+        <td class="sum-esp">"<strong>El lobo</strong> corre" → lobo</td>
+      </tr>
+      <tr>
+        <td><span class="chip chip-gen">Genitivo</span></td>
+        <td class="sum-preg">¿De quién?</td>
+        <td class="sum-esp">Complemento del nombre</td>
+        <td class="sum-esp">"el libro <strong>del niño</strong>" → niño</td>
+      </tr>
+      <tr>
+        <td><span class="chip chip-dat">Dativo</span></td>
+        <td class="sum-preg">¿A quién / para quién?</td>
+        <td class="sum-esp">Objeto indirecto</td>
+        <td class="sum-esp">"doy el libro <strong>al maestro</strong>" → maestro</td>
+      </tr>
+      <tr>
+        <td><span class="chip chip-ac">Acusativo</span></td>
+        <td class="sum-preg">¿Qué (objeto)?</td>
+        <td class="sum-esp">Objeto directo · dirección</td>
+        <td class="sum-esp">"ama <strong>la rosa</strong>" → rosa</td>
+      </tr>
+      <tr>
+        <td><span class="chip chip-voc">Vocativo</span></td>
+        <td class="sum-preg">¡Oh...!</td>
+        <td class="sum-esp">Interpelación directa</td>
+        <td class="sum-esp">"¡<strong>Marco</strong>, ven aquí!" → Marco</td>
+      </tr>
+      <tr>
+        <td><span class="chip chip-abl">Ablativo</span></td>
+        <td class="sum-preg">¿Con qué? ¿Cómo? ¿Dónde?</td>
+        <td class="sum-esp">Circunstanciales · agente</td>
+        <td class="sum-esp">"camina <strong>con la rosa</strong>" → rosa</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="ejercicios">
+    <h2 class="ejercicios-titulo">Ejercicios</h2>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 1 — Análisis de una oración completa</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">Identifica el caso y función de cada sustantivo:<br><em>Rex milites in urbem ducit.</em></p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">· <span class="sol-hl">Rex</span> = nominativo sg. · sujeto (¿quién conduce?)<br>· <span class="sol-hl">Milites</span> = acusativo pl. · objeto directo (¿a quién conduce?)<br>· <span class="sol-hl">Urbem</span> = acusativo sg. · complemento de dirección con <em>in</em> (¿hacia dónde?)<br><br>Nota: en latín, <em>in</em> + acusativo indica dirección (<em>hacia</em>); <em>in</em> + ablativo indica posición (<em>en</em>, <em>dentro de</em>).</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 2 — El orden de palabras no importa</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">¿Cambia el significado entre estas dos oraciones? ¿Por qué?<br><em>Lupus agnum videt.</em> · <em>Agnum lupus videt.</em></p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion"><strong>No cambia el significado</strong>: en ambas el lobo ve al cordero.<br>· <span class="sol-hl">Lupus</span> = nominativo → sujeto (el que ve) en las dos versiones<br>· <span class="sol-hl">Agnum</span> = acusativo → objeto directo (el visto) en las dos versiones<br><br>En latín, son los <strong>casos</strong> (no el orden) los que indican la función de cada palabra. El orden libre se usa para énfasis o estilo, no para gramática.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 3 — Elegir el caso correcto</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">Traduce al latín eligiendo el caso correcto para el hueco: "La niña da la rosa a su madre."<br><em>Puella rosam _______ dat.</em> &nbsp;(<em>mater, matris</em> = madre)</p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion"><span class="sol-hl">Matri</span> · dativo singular de <em>mater</em> · el destinatario de un verbo de dar siempre va en <strong>dativo</strong> (objeto indirecto, ¿a quién?). Pregunta clave: ¿a quién da la niña la rosa? → a su madre → dativo.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 4 — Dativo vs. genitivo (homónimos)</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">En la 1ª declinación, dativo y genitivo singular son iguales (<em>rosae</em>). ¿Cómo distinguirías el caso en estas dos oraciones?<br><em>(a) Odor rosae suavis est. &nbsp; (b) Puella rosae aquam dat.</em></p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">(a) <span class="sol-hl">Rosae</span> = <strong>genitivo</strong> sg. · modifica al sustantivo <em>odor</em> ("el olor <em>de la rosa</em>") — complemento del nombre<br>(b) <span class="sol-hl">Rosae</span> = <strong>dativo</strong> sg. · dependiente del verbo <em>dat</em> ("le da agua <em>a la rosa</em>") — objeto indirecto<br><br>Clave: el genitivo siempre modifica a otro <strong>sustantivo</strong>; el dativo siempre depende de un <strong>verbo</strong>.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 5 — Casos en español</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">Indica qué caso latino corresponde a las palabras en cursiva: "<em>El hijo</em> del <em>rey</em> entró en el <em>palacio</em> con sus <em>soldados</em>."</p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">· <em>El hijo</em> → <span class="sol-hl">Nominativo</span> · sujeto del verbo "entró"<br>· del <em>rey</em> → <span class="sol-hl">Genitivo</span> · "del rey" = complemento del nombre de "hijo"<br>· el <em>palacio</em> → <span class="sol-hl">Acusativo</span> · con <em>in</em> + acusativo indicando dirección ("entró <em>en</em> el palacio" = movimiento hacia)<br>· sus <em>soldados</em> → <span class="sol-hl">Ablativo</span> · "con sus soldados" = <em>cum militibus</em>, complemento de compañía</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+function toggleSolucion(btn) {
+  var sol = btn.nextElementSibling;
+  var visible = sol.style.display === 'block';
+  sol.style.display = visible ? 'none' : 'block';
+  btn.textContent = visible ? 'Ver solución' : 'Ocultar solución';
+}
+</script>
+</body>
+</html>

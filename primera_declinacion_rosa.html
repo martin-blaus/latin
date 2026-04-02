@@ -42,6 +42,20 @@
   .nav-link:hover { background: #E6F1FB; }
   .nav-link.active { background: #E6F1FB; font-weight: 500; pointer-events: none; }
   .nav-sep { color: #ccc; font-size: 12px; }
+  .ejercicios { margin-top: 2.5rem; border-top: 0.5px solid rgba(0,0,0,0.1); padding-top: 1.5rem; }
+  .ejercicios-titulo { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 1rem; }
+  .ejercicio-card { border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; margin-bottom: 0.75rem; }
+  .ejercicio-head { background: #f7f7f5; border-bottom: 0.5px solid rgba(0,0,0,0.12); padding: 7px 14px; }
+  .ejercicio-head span { font-size: 11px; font-weight: 500; color: #888; }
+  .ejercicio-body { padding: 12px 14px; }
+  .ejercicio-p { font-size: 13px; color: #1a1a1a; line-height: 1.7; margin-bottom: 10px; }
+  .ejercicio-p em { font-family: Georgia, serif; }
+  .ejercicio-p strong { color: #185FA5; }
+  .btn-sol { font-size: 12px; color: #185FA5; background: #E6F1FB; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; font-family: inherit; font-weight: 500; }
+  .btn-sol:hover { background: #d0e6f7; }
+  .solucion { display: none; margin-top: 10px; background: #f7f7f5; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; color: #333; line-height: 1.7; border-left: 2px solid #378ADD; }
+  .solucion em { font-family: Georgia, serif; font-style: italic; }
+  .sol-hl { color: #185FA5; font-weight: 500; }
 </style>
 </head>
 <body>
@@ -52,6 +66,7 @@
     <a href="primera_declinacion_rosa.html" class="nav-link active">1ª — rosa, rosae</a>
     <a href="segunda_declinacion_lupus.html" class="nav-link">2ª — lupus, lupi</a>
     <a href="tercera_declinacion_rex.html" class="nav-link">3ª — rex, regis</a>
+    <a href="casos.html" class="nav-link">Casos</a>
   </nav>
   <h1>Primera declinación latina</h1>
   <p class="subtitle">Palabra modelo: <em>rosa, rosae</em> — la rosa</p>
@@ -150,6 +165,64 @@
       </div>
     </div>
   </div>
+
+  <div class="ejercicios">
+    <h2 class="ejercicios-titulo">Ejercicios</h2>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 1 — Identificar el caso</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">¿En qué caso está la palabra en negrita? Justifica tu respuesta.<br><em>Puella <strong>rosas</strong> in horto videt.</em></p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion"><span class="sol-hl">Rosas</span> = <strong>acusativo plural</strong> · es el objeto directo de <em>videt</em> (¿qué ve la niña? → las rosas). La terminación <em>-as</em> marca el acusativo plural de la 1ª declinación.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 2 — Homónimos de declinación</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">El genitivo singular y el nominativo plural de <em>rosa</em> son idénticos: <strong>rosae</strong>. ¿Cómo se distinguen en una oración?</p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">Por el <strong>contexto y la función sintáctica</strong>:<br>· <em>Odor <span class="sol-hl">rosae</span> suavis est</em> → genitivo sg. (el olor <em>de la rosa</em>, modifica a otro sustantivo)<br>· <em><span class="sol-hl">Rosae</span> in horto sunt</em> → nominativo pl. (las rosas son el sujeto del verbo)</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 3 — Completar la forma</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">Completa con la forma correcta de <em>rosa</em>: "El jardín de las rosas es hermoso."<br><em>Hortus _______ pulcher est.</em></p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion"><span class="sol-hl">Rosarum</span> · genitivo plural (terminación <em>-arum</em>) · expresa "el jardín <em>de las rosas</em>" — posesión o relación entre sustantivos.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 4 — Ablativo singular</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">¿Por qué el ablativo singular de <em>rosa</em> se escribe <em>rosā</em> con ā larga, si el nominativo también parece <em>-a</em>?</p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">La <strong>cantidad vocálica</strong> diferencia los dos casos: el nominativo tiene <em>a</em> breve (<em>rosa</em>) y el ablativo tiene <em>ā</em> larga (<em>rosā</em>). En latín clásico hablado se pronunciaban distinto. El macron (ā) sirve de recordatorio para no confundirlos, especialmente en frases como <em>Cum <span class="sol-hl">rosā</span> ambulat</em> donde el ablativo indica compañía.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 5 — Traducción y análisis</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">Traduce la oración e identifica el caso y función de cada sustantivo:<br><em>Domina rosas matri dat.</em></p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">"La señora da las rosas a su madre."<br>· <span class="sol-hl">Domina</span> = nominativo sg. · sujeto de <em>dat</em><br>· <span class="sol-hl">Rosas</span> = acusativo pl. · objeto directo (¿qué da?)<br>· <span class="sol-hl">Matri</span> = dativo sg. de <em>mater</em> · objeto indirecto (¿a quién?)</div>
+      </div>
+    </div>
+  </div>
+
 </div>
+<script>
+function toggleSolucion(btn) {
+  var sol = btn.nextElementSibling;
+  var visible = sol.style.display === 'block';
+  sol.style.display = visible ? 'none' : 'block';
+  btn.textContent = visible ? 'Ver solución' : 'Ocultar solución';
+}
+</script>
 </body>
 </html>

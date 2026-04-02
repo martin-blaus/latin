@@ -46,6 +46,20 @@
   .nav-link:hover { background: #E6F1FB; }
   .nav-link.active { background: #E6F1FB; font-weight: 500; pointer-events: none; }
   .nav-sep { color: #ccc; font-size: 12px; }
+  .ejercicios { margin-top: 2.5rem; border-top: 0.5px solid rgba(0,0,0,0.1); padding-top: 1.5rem; }
+  .ejercicios-titulo { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 1rem; }
+  .ejercicio-card { border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; margin-bottom: 0.75rem; }
+  .ejercicio-head { background: #f7f7f5; border-bottom: 0.5px solid rgba(0,0,0,0.12); padding: 7px 14px; }
+  .ejercicio-head span { font-size: 11px; font-weight: 500; color: #888; }
+  .ejercicio-body { padding: 12px 14px; }
+  .ejercicio-p { font-size: 13px; color: #1a1a1a; line-height: 1.7; margin-bottom: 10px; }
+  .ejercicio-p em { font-family: Georgia, serif; }
+  .ejercicio-p strong { color: #185FA5; }
+  .btn-sol { font-size: 12px; color: #185FA5; background: #E6F1FB; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; font-family: inherit; font-weight: 500; }
+  .btn-sol:hover { background: #d0e6f7; }
+  .solucion { display: none; margin-top: 10px; background: #f7f7f5; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; color: #333; line-height: 1.7; border-left: 2px solid #378ADD; }
+  .solucion em { font-family: Georgia, serif; font-style: italic; }
+  .sol-hl { color: #185FA5; font-weight: 500; }
 </style>
 </head>
 <body>
@@ -56,6 +70,7 @@
     <a href="primera_declinacion_rosa.html" class="nav-link">1ª — rosa, rosae</a>
     <a href="segunda_declinacion_lupus.html" class="nav-link active">2ª — lupus, lupi</a>
     <a href="tercera_declinacion_rex.html" class="nav-link">3ª — rex, regis</a>
+    <a href="casos.html" class="nav-link">Casos</a>
   </nav>
   <h1>Segunda declinación latina</h1>
   <p class="subtitle">Palabras modelo: <em>lupus, lupi</em> (m.) — el lobo · <em>bellum, belli</em> (n.) — la guerra</p>
@@ -160,6 +175,64 @@
       </div>
     </div>
   </div>
+
+  <div class="ejercicios">
+    <h2 class="ejercicios-titulo">Ejercicios</h2>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 1 — Género y caso</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">Identifica el género, caso y función de <em>bellum</em> en la siguiente oración:<br><em>Bellum longum est.</em></p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion"><span class="sol-hl">Bellum</span> = <strong>neutro</strong> · nominativo singular · sujeto del verbo <em>est</em>. La terminación <em>-um</em> en nominativo sg. es característica de los neutros de 2ª declinación.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 2 — Identificar el caso</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">¿En qué caso está la palabra en negrita? ¿Qué función cumple?<br><em>Oculi <strong>lupī</strong> fulvi sunt.</em></p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion"><span class="sol-hl">Lupī</span> = <strong>genitivo singular</strong> · complemento del nombre de <em>oculi</em> (¿los ojos de quién? → del lobo). La terminación <em>-ī</em> marca el genitivo sg. de la 2ª declinación.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 3 — Vocativo de la 2ª declinación</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">Forma el vocativo singular de <em>Marcus</em>. ¿Por qué no es <em>Marcus</em>?</p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion"><span class="sol-hl">Marce</span> · en la 2ª declinación, los masculinos con nominativo en <em>-us</em> forman el vocativo singular en <em>-e</em>. Esta es la única forma donde el vocativo difiere claramente del nominativo en toda la declinación latina. Los masculinos en <em>-er</em> (como <em>puer</em>) son excepción: su vocativo es igual al nominativo.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 4 — Neutros en plural</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">Da el nominativo y acusativo plural de <em>bellum</em>. ¿Qué tienen en común y por qué?</p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">Ambos son <span class="sol-hl">bella</span> (terminación <em>-a</em>) · en latín, los sustantivos <strong>neutros siempre tienen nominativo = acusativo</strong>, tanto en singular como en plural. En plural la terminación es siempre <em>-a</em>. Esta regla aplica a todas las declinaciones.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 5 — Traducción y análisis</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">Traduce e identifica el caso y función de cada sustantivo:<br><em>Agricola lupum timet.</em></p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">"El campesino teme al lobo."<br>· <span class="sol-hl">Agricola</span> = nominativo singular · sujeto de <em>timet</em><br>· <span class="sol-hl">Lupum</span> = acusativo singular · objeto directo (¿a quién teme?)<br>Observa que aunque en español decimos "teme <em>al</em> lobo", en latín no hay preposición: el acusativo solo ya indica objeto directo.</div>
+      </div>
+    </div>
+  </div>
+
 </div>
+<script>
+function toggleSolucion(btn) {
+  var sol = btn.nextElementSibling;
+  var visible = sol.style.display === 'block';
+  sol.style.display = visible ? 'none' : 'block';
+  btn.textContent = visible ? 'Ver solución' : 'Ocultar solución';
+}
+</script>
 </body>
 </html>

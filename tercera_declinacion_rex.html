@@ -54,6 +54,20 @@
   .nav-link:hover { background: #E6F1FB; }
   .nav-link.active { background: #E6F1FB; font-weight: 500; pointer-events: none; }
   .nav-sep { color: #ccc; font-size: 12px; }
+  .ejercicios { margin-top: 2.5rem; border-top: 0.5px solid rgba(0,0,0,0.1); padding-top: 1.5rem; }
+  .ejercicios-titulo { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 1rem; }
+  .ejercicio-card { border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; margin-bottom: 0.75rem; }
+  .ejercicio-head { background: #f7f7f5; border-bottom: 0.5px solid rgba(0,0,0,0.12); padding: 7px 14px; }
+  .ejercicio-head span { font-size: 11px; font-weight: 500; color: #888; }
+  .ejercicio-body { padding: 12px 14px; }
+  .ejercicio-p { font-size: 13px; color: #1a1a1a; line-height: 1.7; margin-bottom: 10px; }
+  .ejercicio-p em { font-family: Georgia, serif; }
+  .ejercicio-p strong { color: #185FA5; }
+  .btn-sol { font-size: 12px; color: #185FA5; background: #E6F1FB; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; font-family: inherit; font-weight: 500; }
+  .btn-sol:hover { background: #d0e6f7; }
+  .solucion { display: none; margin-top: 10px; background: #f7f7f5; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; color: #333; line-height: 1.7; border-left: 2px solid #378ADD; }
+  .solucion em { font-family: Georgia, serif; font-style: italic; }
+  .sol-hl { color: #185FA5; font-weight: 500; }
 </style>
 </head>
 <body>
@@ -64,6 +78,7 @@
     <a href="primera_declinacion_rosa.html" class="nav-link">1ª — rosa, rosae</a>
     <a href="segunda_declinacion_lupus.html" class="nav-link">2ª — lupus, lupi</a>
     <a href="tercera_declinacion_rex.html" class="nav-link active">3ª — rex, regis</a>
+    <a href="casos.html" class="nav-link">Casos</a>
   </nav>
   <h1>Tercera declinación latina</h1>
   <p class="subtitle">Palabras modelo: <em>rex, regis</em> (imp. m.) · <em>civis, civis</em> (par. m.) · <em>corpus, corporis</em> (n.)</p>
@@ -175,6 +190,64 @@
       </div>
     </div>
   </div>
+
+  <div class="ejercicios">
+    <h2 class="ejercicios-titulo">Ejercicios</h2>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 1 — Imparisílabo vs. parisílabo</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">¿Es <em>rex, regis</em> imparisílabo o parisílabo? ¿Cómo afecta al genitivo plural?</p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion"><strong>Imparisílabo</strong>: <em>rex</em> tiene 1 sílaba y <em>re-gis</em> tiene 2 → distinto número de sílabas.<br>Consecuencia: el genitivo plural es <span class="sol-hl">regum</span> (terminación <em>-um</em>), propia de los imparisílabos.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 2 — Genitivo plural</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">¿Por qué el genitivo plural de <em>civis, civis</em> es <em>civium</em> y no <em>civum</em>?</p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">Porque <em>civis, civis</em> es <strong>parisílabo</strong>: <em>ci-vis / ci-vis</em> tienen el mismo número de sílabas en nominativo y genitivo singular.<br>Los parisílabos forman el genitivo plural en <span class="sol-hl">-ium</span>, los imparisílabos en <em>-um</em>. Esta distinción es la principal dificultad de la 3ª declinación.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 3 — Identificar el caso</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">¿En qué caso está la palabra en negrita? ¿Qué función cumple?<br><em>Milites <strong>regem</strong> laudant.</em></p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion"><span class="sol-hl">Regem</span> = <strong>acusativo singular</strong> de <em>rex</em> · objeto directo de <em>laudant</em> (¿a quién alaban? → al rey). La terminación <em>-em</em> es el acusativo singular para los masculinos y femeninos de 3ª declinación.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 4 — Neutros de 3ª declinación</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p"><em>Corpus</em> es neutro. ¿Cuáles son su nominativo y acusativo singular? ¿Qué regla general ilustra?</p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">Ambos son <span class="sol-hl">corpus</span> · ilustra la regla universal del latín: <strong>en los neutros, nominativo = acusativo siempre</strong> (singular y plural). En plural, la forma es <em>corpora</em> para ambos casos. Esta regla aplica en todas las declinaciones.</div>
+      </div>
+    </div>
+
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>Ejercicio 5 — Ablativo: imparisílabo vs. parisílabo</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">En <em>Cum civī loquitur consul</em> el ablativo de <em>civis</em> termina en <em>-ī</em>. Si se usara <em>rex</em> en su lugar, ¿cómo sería la forma y por qué?</p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">Sería <span class="sol-hl">rege</span> (terminación <em>-e</em>) · los <strong>imparisílabos</strong> forman el ablativo singular en <em>-e</em>, mientras que los <strong>parisílabos</strong> lo forman en <em>-ī</em>. Esta diferencia en el ablativo es, junto al genitivo plural, la marca más importante que distingue ambos subgrupos de la 3ª declinación.</div>
+      </div>
+    </div>
+  </div>
+
 </div>
+<script>
+function toggleSolucion(btn) {
+  var sol = btn.nextElementSibling;
+  var visible = sol.style.display === 'block';
+  sol.style.display = visible ? 'none' : 'block';
+  btn.textContent = visible ? 'Ver solución' : 'Ocultar solución';
+}
+</script>
 </body>
 </html>
