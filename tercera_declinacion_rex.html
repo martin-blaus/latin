@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tercera Declinación Latina — Rex, Regis</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #ffffff; color: #1a1a1a; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .wrap { padding: 1rem 0; }
+  .meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .badge { padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 500; }
+  .b-teal { background: #E1F5EE; color: #085041; }
+  .b-blue { background: #E6F1FB; color: #0C447C; }
+  .b-amber { background: #FAEEDA; color: #633806; }
+  .note { background: #f7f7f5; border-left: 2px solid #378ADD; padding: 10px 14px; font-size: 12px; color: #555; margin-bottom: 1.5rem; line-height: 1.6; }
+  .legend { display: flex; gap: 16px; margin-bottom: 1rem; font-size: 12px; color: #666; flex-wrap: wrap; }
+  .leg-dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+  .card { background: #ffffff; border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; margin-bottom: 1rem; }
+  .card-head { background: #f7f7f5; border-bottom: 0.5px solid rgba(0,0,0,0.12); padding: 10px 16px; }
+  .card-head h3 { margin: 0; font-size: 15px; font-weight: 500; color: #1a1a1a; }
+  .card-head p { margin: 2px 0 0; font-size: 12px; color: #666; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; table-layout: fixed; }
+  th { background: #f7f7f5; color: #666; font-weight: 500; padding: 7px 10px; text-align: left; border-bottom: 0.5px solid rgba(0,0,0,0.12); }
+  td { padding: 7px 10px; border-bottom: 0.5px solid rgba(0,0,0,0.1); color: #1a1a1a; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .caso { color: #888; font-size: 11px; }
+  .term-imp { font-weight: 500; color: #185FA5; }
+  .term-par { font-weight: 500; color: #0F6E56; }
+  .term-n { font-weight: 500; color: #854F0B; }
+  .fn { color: #888; font-size: 11px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  @media (max-width: 560px) { .grid2 { grid-template-columns: 1fr; } .grid3 { grid-template-columns: 1fr; } }
+  .example-card { background: #ffffff; border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; }
+  .ex-head { padding: 8px 14px; }
+  .ex-head.imp { background: #E6F1FB; border-bottom: 0.5px solid #B5D4F4; }
+  .ex-head.imp span { font-size: 12px; font-weight: 500; color: #0C447C; }
+  .ex-head.par { background: #E1F5EE; border-bottom: 0.5px solid #9FE1CB; }
+  .ex-head.par span { font-size: 12px; font-weight: 500; color: #085041; }
+  .ex-head.neu { background: #FAEEDA; border-bottom: 0.5px solid #FAC775; }
+  .ex-head.neu span { font-size: 12px; font-weight: 500; color: #633806; }
+  .ex-body { padding: 12px 14px; }
+  .latin { font-family: Georgia, serif; font-size: 14px; color: #1a1a1a; margin: 0 0 4px; font-style: italic; }
+  .esp { font-size: 13px; color: #666; margin: 0 0 8px; }
+  .analysis { font-size: 11px; color: #aaa; border-top: 0.5px solid rgba(0,0,0,0.1); padding-top: 8px; line-height: 1.6; }
+  .hl-imp { color: #185FA5; font-weight: 500; }
+  .hl-par { color: #0F6E56; font-weight: 500; }
+  .hl-neu { color: #854F0B; font-weight: 500; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 14px; color: #666; margin-bottom: 1.5rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Tercera declinación latina</h1>
+  <p class="subtitle">Palabras modelo: <em>rex, regis</em> (imp. m.) · <em>civis, civis</em> (par. m.) · <em>corpus, corporis</em> (n.)</p>
+
+  <div class="meta">
+    <span class="badge b-teal">Tema en consonante o -i</span>
+    <span class="badge b-blue">Imparisílabos: rex, regis</span>
+    <span class="badge b-teal">Parisílabos: civis, civis</span>
+    <span class="badge b-amber">Neutro: corpus, corporis</span>
+  </div>
+
+  <div class="note">
+    Los <strong>imparisílabos</strong> tienen distinto número de sílabas en nom. y gen. sg. (<em>rex / re-gis</em>). Los <strong>parisílabos</strong> tienen igual número (<em>ci-vis / ci-vis</em>). Esta distinción cambia el genitivo plural: <strong>-um</strong> vs <strong>-ium</strong>.
+  </div>
+
+  <div class="legend">
+    <span><span class="leg-dot" style="background:#185FA5"></span>Imparisílabo M/F</span>
+    <span><span class="leg-dot" style="background:#0F6E56"></span>Parisílabo M/F</span>
+    <span><span class="leg-dot" style="background:#854F0B"></span>Neutro (imp.)</span>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-head"><h3>Singular</h3><p>rex · civis · corpus</p></div>
+      <table>
+        <tr>
+          <th style="width:24%">Caso</th>
+          <th style="width:18%">Imp. M/F</th>
+          <th style="width:18%">Par. M/F</th>
+          <th style="width:18%">N</th>
+          <th>Función</th>
+        </tr>
+        <tr><td><span class="caso">Nominativo</span></td><td class="term-imp">—</td><td class="term-par">-is</td><td class="term-n">—</td><td class="fn">Sujeto</td></tr>
+        <tr><td><span class="caso">Genitivo</span></td><td class="term-imp">-is</td><td class="term-par">-is</td><td class="term-n">-is</td><td class="fn">Compl. nombre</td></tr>
+        <tr><td><span class="caso">Dativo</span></td><td class="term-imp">-ī</td><td class="term-par">-ī</td><td class="term-n">-ī</td><td class="fn">Obj. indirecto</td></tr>
+        <tr><td><span class="caso">Acusativo</span></td><td class="term-imp">-em</td><td class="term-par">-em</td><td class="term-n">= nom.</td><td class="fn">Obj. directo</td></tr>
+        <tr><td><span class="caso">Vocativo</span></td><td class="term-imp">= nom.</td><td class="term-par">= nom.</td><td class="term-n">= nom.</td><td class="fn">Interpelación</td></tr>
+        <tr><td><span class="caso">Ablativo</span></td><td class="term-imp">-e</td><td class="term-par">-ī</td><td class="term-n">-e</td><td class="fn">Circunstancial</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Plural</h3><p>reges · cives · corpora</p></div>
+      <table>
+        <tr>
+          <th style="width:24%">Caso</th>
+          <th style="width:18%">Imp. M/F</th>
+          <th style="width:18%">Par. M/F</th>
+          <th style="width:18%">N</th>
+          <th>Función</th>
+        </tr>
+        <tr><td><span class="caso">Nominativo</span></td><td class="term-imp">-ēs</td><td class="term-par">-ēs</td><td class="term-n">-a</td><td class="fn">Sujeto</td></tr>
+        <tr><td><span class="caso">Genitivo</span></td><td class="term-imp">-um</td><td class="term-par">-ium</td><td class="term-n">-um</td><td class="fn">Compl. nombre</td></tr>
+        <tr><td><span class="caso">Dativo</span></td><td class="term-imp">-ibus</td><td class="term-par">-ibus</td><td class="term-n">-ibus</td><td class="fn">Obj. indirecto</td></tr>
+        <tr><td><span class="caso">Acusativo</span></td><td class="term-imp">-ēs</td><td class="term-par">-ēs / -īs</td><td class="term-n">-a</td><td class="fn">Obj. directo</td></tr>
+        <tr><td><span class="caso">Vocativo</span></td><td class="term-imp">-ēs</td><td class="term-par">-ēs</td><td class="term-n">-a</td><td class="fn">Interpelación</td></tr>
+        <tr><td><span class="caso">Ablativo</span></td><td class="term-imp">-ibus</td><td class="term-par">-ibus</td><td class="term-n">-ibus</td><td class="fn">Circunstancial</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="example-card">
+      <div class="ex-head imp"><span>Nominativo — imparisílabo</span></div>
+      <div class="ex-body">
+        <p class="latin">Rex in urbe regnat.</p>
+        <p class="esp">"El rey reina en la ciudad."</p>
+        <p class="analysis"><span class="hl-imp">Rex</span> = nominativo sg. · sujeto de <em>regnat</em></p>
+      </div>
+    </div>
+    <div class="example-card">
+      <div class="ex-head imp"><span>Genitivo — imparisílabo</span></div>
+      <div class="ex-body">
+        <p class="latin">Nomen regis notum est.</p>
+        <p class="esp">"El nombre del rey es conocido."</p>
+        <p class="analysis"><span class="hl-imp">Regis</span> = genitivo sg. · modifica a <em>nomen</em></p>
+      </div>
+    </div>
+    <div class="example-card">
+      <div class="ex-head imp"><span>Acusativo — imparisílabo</span></div>
+      <div class="ex-body">
+        <p class="latin">Milites regem laudant.</p>
+        <p class="esp">"Los soldados alaban al rey."</p>
+        <p class="analysis"><span class="hl-imp">Regem</span> = acusativo sg. · objeto directo de <em>laudant</em></p>
+      </div>
+    </div>
+    <div class="example-card">
+      <div class="ex-head par"><span>Nominativo — parisílabo</span></div>
+      <div class="ex-body">
+        <p class="latin">Civis Romanus sum.</p>
+        <p class="esp">"Soy ciudadano romano."</p>
+        <p class="analysis"><span class="hl-par">Civis</span> = nominativo sg. · predicado nominal</p>
+      </div>
+    </div>
+    <div class="example-card">
+      <div class="ex-head par"><span>Ablativo — parisílabo en -ī</span></div>
+      <div class="ex-body">
+        <p class="latin">Cum civī loquitur consul.</p>
+        <p class="esp">"El cónsul habla con el ciudadano."</p>
+        <p class="analysis"><span class="hl-par">Civī</span> = ablativo sg. · par. termina en <em>-ī</em>, no en <em>-e</em></p>
+      </div>
+    </div>
+    <div class="example-card">
+      <div class="ex-head neu"><span>Neutro — nom./ac. iguales</span></div>
+      <div class="ex-body">
+        <p class="latin">Corpus sanum in terra iacet.</p>
+        <p class="esp">"Un cuerpo sano yace en la tierra."</p>
+        <p class="analysis"><span class="hl-neu">Corpus</span> = nominativo sg. neutro · nom. = ac. siempre</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
