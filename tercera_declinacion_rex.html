@@ -49,10 +49,22 @@
   .hl-neu { color: #854F0B; font-weight: 500; }
   h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
   .subtitle { font-size: 14px; color: #666; margin-bottom: 1.5rem; }
+  .nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 1.75rem; }
+  .nav-link { font-size: 12px; color: #185FA5; text-decoration: none; padding: 4px 10px; border-radius: 6px; border: 0.5px solid rgba(0,0,0,0.15); }
+  .nav-link:hover { background: #E6F1FB; }
+  .nav-link.active { background: #E6F1FB; font-weight: 500; pointer-events: none; }
+  .nav-sep { color: #ccc; font-size: 12px; }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-link">← Inicio</a>
+    <span class="nav-sep">|</span>
+    <a href="primera_declinacion_rosa.html" class="nav-link">1ª — rosa, rosae</a>
+    <a href="segunda_declinacion_lupus.html" class="nav-link">2ª — lupus, lupi</a>
+    <a href="tercera_declinacion_rex.html" class="nav-link active">3ª — rex, regis</a>
+  </nav>
   <h1>Tercera declinación latina</h1>
   <p class="subtitle">Palabras modelo: <em>rex, regis</em> (imp. m.) · <em>civis, civis</em> (par. m.) · <em>corpus, corporis</em> (n.)</p>
 

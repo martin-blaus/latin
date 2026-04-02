@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Declinaciones del Latín</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #ffffff; color: #1a1a1a; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .wrap { padding: 1rem 0; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 14px; color: #666; margin-bottom: 2rem; }
+  .deck { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .deck { grid-template-columns: 1fr; } }
+  .dec-card { background: #ffffff; border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; text-decoration: none; color: inherit; display: block; transition: box-shadow 0.15s; }
+  .dec-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .dec-card-head { background: #f7f7f5; border-bottom: 0.5px solid rgba(0,0,0,0.12); padding: 14px 16px; }
+  .dec-card-head .num { font-size: 11px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .dec-card-head h2 { font-size: 16px; font-weight: 500; color: #1a1a1a; margin: 0; }
+  .dec-card-head .modelo { font-size: 12px; color: #666; margin-top: 2px; font-style: italic; }
+  .dec-card-body { padding: 14px 16px; }
+  .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .badge { padding: 3px 10px; border-radius: 8px; font-size: 11px; font-weight: 500; }
+  .b-teal { background: #E1F5EE; color: #085041; }
+  .b-blue { background: #E6F1FB; color: #0C447C; }
+  .b-coral { background: #FAECE7; color: #712B13; }
+  .b-purple { background: #EEEDFE; color: #3C3489; }
+  .b-amber { background: #FAEEDA; color: #633806; }
+  .desc { font-size: 12.5px; color: #555; line-height: 1.6; margin-bottom: 14px; }
+  .go { font-size: 12px; color: #185FA5; font-weight: 500; }
+  .intro-note { background: #f7f7f5; border-left: 2px solid #378ADD; padding: 10px 14px; font-size: 12px; color: #555; margin-bottom: 2rem; line-height: 1.6; border-radius: 0 6px 6px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Declinaciones del latín</h1>
+  <p class="subtitle">Tablas de declinación y ejemplos de uso para aprender latín</p>
+
+  <div class="intro-note">
+    El latín tiene cinco declinaciones que agrupan los sustantivos según su terminación en el genitivo singular. En estos materiales se cubren las tres primeras, las más frecuentes en los textos clásicos.
+  </div>
+
+  <div class="deck">
+    <a href="primera_declinacion_rosa.html" class="dec-card">
+      <div class="dec-card-head">
+        <div class="num">Primera declinación</div>
+        <h2>Tema en -a</h2>
+        <div class="modelo">rosa, rosae — la rosa</div>
+      </div>
+      <div class="dec-card-body">
+        <div class="meta">
+          <span class="badge b-teal">Tema en -a</span>
+          <span class="badge b-blue">Género femenino</span>
+        </div>
+        <p class="desc">Sustantivos con genitivo en <em>-ae</em>. Mayormente femeninos. Paradigma completo singular y plural, con seis ejemplos de uso.</p>
+        <span class="go">Ver declinación →</span>
+      </div>
+    </a>
+
+    <a href="segunda_declinacion_lupus.html" class="dec-card">
+      <div class="dec-card-head">
+        <div class="num">Segunda declinación</div>
+        <h2>Tema en -o</h2>
+        <div class="modelo">lupus, lupi · bellum, belli</div>
+      </div>
+      <div class="dec-card-body">
+        <div class="meta">
+          <span class="badge b-teal">Tema en -o</span>
+          <span class="badge b-blue">Masculino</span>
+          <span class="badge b-purple">Neutro</span>
+        </div>
+        <p class="desc">Sustantivos con genitivo en <em>-ī</em>. Incluye masculinos (lupus), neutros (bellum) y masculinos en -er (puer).</p>
+        <span class="go">Ver declinación →</span>
+      </div>
+    </a>
+
+    <a href="tercera_declinacion_rex.html" class="dec-card">
+      <div class="dec-card-head">
+        <div class="num">Tercera declinación</div>
+        <h2>Tema en consonante/-i</h2>
+        <div class="modelo">rex, regis · civis, civis · corpus, corporis</div>
+      </div>
+      <div class="dec-card-body">
+        <div class="meta">
+          <span class="badge b-blue">Imparisílabos</span>
+          <span class="badge b-teal">Parisílabos</span>
+          <span class="badge b-amber">Neutro</span>
+        </div>
+        <p class="desc">La más compleja. Genitivo en <em>-is</em>. Distingue imparisílabos (gen. pl. <em>-um</em>) de parisílabos (gen. pl. <em>-ium</em>).</p>
+        <span class="go">Ver declinación →</span>
+      </div>
+    </a>
+  </div>
+</div>
+</body>
+</html>
