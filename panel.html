@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de usuario — Latín</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #ffffff; color: #1a1a1a; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .wrap { padding: 1rem 0; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 14px; color: #666; margin-bottom: 1.5rem; }
+
+  .nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 1.75rem; }
+  .nav-link { font-size: 12px; color: #185FA5; text-decoration: none; padding: 4px 10px; border-radius: 6px; border: 0.5px solid rgba(0,0,0,0.15); }
+  .nav-link:hover { background: #E6F1FB; }
+  .nav-link.active { background: #E6F1FB; font-weight: 500; pointer-events: none; }
+  .nav-sep { color: #ccc; font-size: 12px; }
+
+  /* Layout */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  @media (max-width: 700px) { .grid2 { grid-template-columns: 1fr; } .grid4 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 420px) { .grid4 { grid-template-columns: 1fr; } }
+
+  /* Cards */
+  .panel-card { border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; }
+  .panel-card-head { background: #f7f7f5; border-bottom: 0.5px solid rgba(0,0,0,0.12); padding: 10px 16px; }
+  .panel-card-head h3 { font-size: 13px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
+  .panel-card-body { padding: 16px; }
+
+  /* Avatar */
+  .avatar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; background: #185FA5; color: #fff; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .avatar-email { font-size: 12px; color: #666; word-break: break-all; }
+  .avatar-name { font-size: 14px; font-weight: 500; color: #1a1a1a; }
+
+  /* Profile form */
+  .profile-field { margin-bottom: 10px; }
+  .profile-field label { display: block; font-size: 11px; color: #666; margin-bottom: 3px; font-weight: 500; }
+  .profile-field input { width: 100%; border: 0.5px solid rgba(0,0,0,0.2); border-radius: 6px; padding: 7px 10px; font-size: 13px; font-family: inherit; outline: none; }
+  .profile-field input:focus { border-color: #378ADD; }
+  .profile-field input:disabled { background: #f7f7f5; color: #888; }
+  .btn-primary { font-size: 12px; color: #fff; background: #185FA5; border: none; border-radius: 6px; padding: 6px 14px; cursor: pointer; font-family: inherit; font-weight: 500; }
+  .btn-primary:hover { background: #0C447C; }
+  .btn-ghost { font-size: 12px; color: #185FA5; background: #E6F1FB; border: none; border-radius: 6px; padding: 6px 14px; cursor: pointer; font-family: inherit; font-weight: 500; margin-top: 8px; display: block; width: 100%; text-align: center; }
+  .btn-ghost:hover { background: #d0e6f7; }
+  .profile-msg { font-size: 11px; margin-top: 6px; min-height: 16px; }
+  .profile-msg.ok  { color: #0F6E56; }
+  .profile-msg.err { color: #712B13; }
+
+  /* Stats */
+  .stat-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .stat-total-label { font-size: 12px; color: #666; }
+  .stat-total-val { font-size: 15px; font-weight: 500; color: #1a1a1a; }
+  .progbar-bg { background: #f0f0ee; border-radius: 99px; height: 6px; margin-bottom: 16px; overflow: hidden; }
+  .progbar-fill { height: 100%; border-radius: 99px; background: #185FA5; transition: width 0.4s ease; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .stat-box { background: #f7f7f5; border-radius: 8px; padding: 10px; text-align: center; }
+  .stat-num { font-size: 22px; font-weight: 600; color: #1a1a1a; line-height: 1.2; }
+  .stat-lbl { font-size: 10px; color: #888; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  /* Section progress cards */
+  .section-title { font-size: 13px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+  .sec-card { border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; }
+  .sec-card-head { padding: 10px 14px; border-bottom: 0.5px solid rgba(0,0,0,0.1); }
+  .sec-card-head .sec-label { font-size: 12px; font-weight: 500; color: #1a1a1a; }
+  .sec-card-head .sec-modelo { font-size: 11px; color: #888; font-style: italic; margin-top: 1px; }
+  .sec-card-body { padding: 12px 14px; }
+  .sec-count { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .sec-count-num { font-size: 13px; font-weight: 500; }
+  .sec-count-pct { font-size: 11px; color: #888; }
+  .sec-progbar { background: #f0f0ee; border-radius: 99px; height: 4px; margin-bottom: 10px; overflow: hidden; }
+  .sec-progbar-fill { height: 100%; border-radius: 99px; background: #185FA5; transition: width 0.4s ease; }
+  .sec-ex-list { list-style: none; }
+  .sec-ex-list li { font-size: 11px; color: #888; padding: 2px 0; display: flex; align-items: center; gap: 5px; }
+  .sec-ex-list li .ex-dot { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid #ddd; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; }
+  .sec-ex-list li.done .ex-dot { background: #E1F5EE; border-color: #0F6E56; color: #0F6E56; }
+  .sec-ex-list li.done { color: #333; }
+  .sec-card-link { display: block; text-align: center; font-size: 11px; color: #185FA5; text-decoration: none; margin-top: 10px; padding: 5px; border-radius: 6px; }
+  .sec-card-link:hover { background: #E6F1FB; }
+
+  /* States */
+  #panel-loading { color: #888; font-size: 13px; padding: 2rem 0; }
+  #panel-unauth { display: none; text-align: center; padding: 3rem 1rem; }
+  #panel-unauth p { font-size: 14px; color: #666; margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-link">← Inicio</a>
+    <span class="nav-sep">|</span>
+    <a href="primera_declinacion_rosa.html" class="nav-link">1ª — rosa, rosae</a>
+    <a href="segunda_declinacion_lupus.html" class="nav-link">2ª — lupus, lupi</a>
+    <a href="tercera_declinacion_rex.html" class="nav-link">3ª — rex, regis</a>
+    <a href="casos.html" class="nav-link">Casos</a>
+    <a href="panel.html" class="nav-link active">Panel</a>
+  </nav>
+
+  <div id="panel-loading">Cargando…</div>
+
+  <div id="panel-unauth">
+    <p>Iniciá sesión para ver tu panel de usuario.</p>
+    <button class="btn-primary" id="unauth-login-btn">Iniciar sesión</button>
+  </div>
+
+  <div id="panel-content" style="display:none">
+    <h1>Panel de usuario</h1>
+    <p class="subtitle" id="panel-subtitle"></p>
+
+    <div class="grid2">
+
+      <!-- Perfil -->
+      <div class="panel-card">
+        <div class="panel-card-head"><h3>Perfil</h3></div>
+        <div class="panel-card-body">
+          <div class="avatar-row">
+            <div class="avatar" id="panel-avatar">?</div>
+            <div>
+              <div class="avatar-name" id="panel-display-name"></div>
+              <div class="avatar-email" id="panel-email"></div>
+            </div>
+          </div>
+          <div class="profile-field">
+            <label>Nombre</label>
+            <input id="input-name" type="text" placeholder="Tu nombre">
+          </div>
+          <button class="btn-primary" id="btn-save-name">Guardar nombre</button>
+          <div class="profile-msg" id="name-msg"></div>
+          <button class="btn-ghost" id="btn-reset-pw">Enviar correo para cambiar contraseña</button>
+          <div class="profile-msg" id="pw-msg"></div>
+        </div>
+      </div>
+
+      <!-- Estadísticas -->
+      <div class="panel-card">
+        <div class="panel-card-head"><h3>Estadísticas</h3></div>
+        <div class="panel-card-body">
+          <div class="stat-total-row">
+            <span class="stat-total-label">Ejercicios completados</span>
+            <span class="stat-total-val"><span id="stat-done">0</span> / 20</span>
+          </div>
+          <div class="progbar-bg">
+            <div class="progbar-fill" id="stat-bar" style="width:0%"></div>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-box">
+              <div class="stat-num" id="stat-pct">0%</div>
+              <div class="stat-lbl">Completado</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" id="stat-streak">0</div>
+              <div class="stat-lbl">Racha (días)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" id="stat-days">0</div>
+              <div class="stat-lbl">Días activo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Progreso por sección -->
+    <p class="section-title">Progreso por sección</p>
+    <div class="grid4" id="sections-grid"></div>
+  </div>
+</div>
+
+<script type="module" src="auth-ui.js"></script>
+<script type="module">
+import { auth, db } from './firebase-config.js';
+import {
+  onAuthStateChanged, updateProfile, sendPasswordResetEmail
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import {
+  doc, getDoc, updateDoc
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const PAGES = [
+  {
+    id:        'primera_declinacion_rosa',
+    label:     '1ª Declinación',
+    modelo:    'rosa, rosae',
+    href:      'primera_declinacion_rosa.html',
+    exercises: ['Identificar el caso', 'Homónimos de declinación', 'Completar la forma', 'Ablativo singular', 'Traducción y análisis'],
+  },
+  {
+    id:        'segunda_declinacion_lupus',
+    label:     '2ª Declinación',
+    modelo:    'lupus, lupi',
+    href:      'segunda_declinacion_lupus.html',
+    exercises: ['Género y caso', 'Identificar el caso', 'Vocativo de la 2ª', 'Neutros en plural', 'Traducción y análisis'],
+  },
+  {
+    id:        'tercera_declinacion_rex',
+    label:     '3ª Declinación',
+    modelo:    'rex, regis',
+    href:      'tercera_declinacion_rex.html',
+    exercises: ['Imparisílabo vs. parisílabo', 'Genitivo plural', 'Identificar el caso', 'Neutros de 3ª', 'Ablativo imp. vs. par.'],
+  },
+  {
+    id:        'casos',
+    label:     'Los casos',
+    modelo:    'Nominativo · Ablativo…',
+    href:      'casos.html',
+    exercises: ['Análisis de oración', 'Orden de palabras', 'Elegir el caso', 'Dativo vs. genitivo', 'Casos en español'],
+  },
+];
+
+const TOTAL = PAGES.length * 5; // 20
+
+// ── Auth state ─────────────────────────────────────────────────────────────
+onAuthStateChanged(auth, async user => {
+  document.getElementById('panel-loading').style.display = 'none';
+  if (!user) {
+    document.getElementById('panel-unauth').style.display = 'block';
+    return;
+  }
+  document.getElementById('panel-content').style.display = 'block';
+  await renderPanel(user);
+});
+
+document.getElementById('unauth-login-btn').addEventListener('click', () => {
+  document.getElementById('auth-btn')?.click();
+});
+
+// ── Render panel ───────────────────────────────────────────────────────────
+async function renderPanel(user) {
+  // Profile
+  const name = user.displayName || '';
+  document.getElementById('panel-avatar').textContent    = initials(name || user.email);
+  document.getElementById('panel-display-name').textContent = name || '—';
+  document.getElementById('panel-email').textContent     = user.email;
+  document.getElementById('panel-subtitle').textContent  = name ? `Bienvenido, ${name}` : user.email;
+  document.getElementById('input-name').value            = name;
+
+  // Firestore data
+  const snap = await getDoc(doc(db, 'users', user.uid));
+  const data = snap.exists() ? snap.data() : {};
+  const progress     = data.progress     || {};
+  const activityDates = data.activityDates || [];
+
+  // Stats
+  let totalDone = 0;
+  PAGES.forEach(p => {
+    const pp = progress[p.id] || {};
+    totalDone += Object.values(pp).filter(Boolean).length;
+  });
+  const pct = Math.round(totalDone / TOTAL * 100);
+  document.getElementById('stat-done').textContent   = totalDone;
+  document.getElementById('stat-pct').textContent    = pct + '%';
+  document.getElementById('stat-bar').style.width    = pct + '%';
+  document.getElementById('stat-streak').textContent = calcStreak(activityDates);
+  document.getElementById('stat-days').textContent   = new Set(activityDates).size;
+
+  // Section cards
+  const grid = document.getElementById('sections-grid');
+  grid.innerHTML = '';
+  PAGES.forEach(p => {
+    const pp = progress[p.id] || {};
+    const done = p.exercises.filter((_, i) => pp[i]).length;
+    const secPct = Math.round(done / p.exercises.length * 100);
+    const card = document.createElement('div');
+    card.className = 'sec-card';
+    card.innerHTML = `
+      <div class="sec-card-head">
+        <div class="sec-label">${p.label}</div>
+        <div class="sec-modelo">${p.modelo}</div>
+      </div>
+      <div class="sec-card-body">
+        <div class="sec-count">
+          <span class="sec-count-num">${done} / ${p.exercises.length}</span>
+          <span class="sec-count-pct">${secPct}%</span>
+        </div>
+        <div class="sec-progbar"><div class="sec-progbar-fill" style="width:${secPct}%"></div></div>
+        <ul class="sec-ex-list">
+          ${p.exercises.map((ex, i) => `
+            <li class="${pp[i] ? 'done' : ''}">
+              <span class="ex-dot">${pp[i] ? '✓' : ''}</span>
+              ${ex}
+            </li>
+          `).join('')}
+        </ul>
+        <a href="${p.href}" class="sec-card-link">Ir a ejercicios →</a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function initials(str) {
+  if (!str) return '?';
+  const parts = str.split(/[\s@]+/).filter(Boolean);
+  return parts.length >= 2
+    ? (parts[0][0] + parts[1][0]).toUpperCase()
+    : str[0].toUpperCase();
+}
+
+function calcStreak(dates) {
+  if (!dates || dates.length === 0) return 0;
+  const unique  = [...new Set(dates)].sort().reverse();
+  const today   = new Date().toISOString().slice(0, 10);
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  if (unique[0] !== today && unique[0] !== yesterday) return 0;
+  let streak = 0;
+  const start = new Date(unique[0]);
+  for (const d of unique) {
+    const expected = new Date(start);
+    expected.setDate(expected.getDate() - streak);
+    if (d === expected.toISOString().slice(0, 10)) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+  return streak;
+}
+
+// ── Guardar nombre ─────────────────────────────────────────────────────────
+document.getElementById('btn-save-name').addEventListener('click', async () => {
+  const name = document.getElementById('input-name').value.trim();
+  const msg  = document.getElementById('name-msg');
+  try {
+    await updateProfile(auth.currentUser, { displayName: name });
+    await updateDoc(doc(db, 'users', auth.currentUser.uid), { displayName: name });
+    document.getElementById('panel-display-name').textContent = name || '—';
+    document.getElementById('panel-avatar').textContent = initials(name || auth.currentUser.email);
+    document.getElementById('panel-subtitle').textContent = name ? `Bienvenido, ${name}` : auth.currentUser.email;
+    msg.textContent = 'Nombre guardado.';
+    msg.className   = 'profile-msg ok';
+  } catch {
+    msg.textContent = 'No se pudo guardar. Intentá de nuevo.';
+    msg.className   = 'profile-msg err';
+  }
+  setTimeout(() => { msg.textContent = ''; }, 3000);
+});
+
+// ── Resetear contraseña ────────────────────────────────────────────────────
+document.getElementById('btn-reset-pw').addEventListener('click', async () => {
+  const msg = document.getElementById('pw-msg');
+  try {
+    await sendPasswordResetEmail(auth, auth.currentUser.email);
+    msg.textContent = 'Correo enviado. Revisá tu bandeja.';
+    msg.className   = 'profile-msg ok';
+  } catch {
+    msg.textContent = 'No se pudo enviar el correo.';
+    msg.className   = 'profile-msg err';
+  }
+  setTimeout(() => { msg.textContent = ''; }, 4000);
+});
+</script>
+</body>
+</html>

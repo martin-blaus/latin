@@ -6,11 +6,11 @@ import {
   onAuthStateChanged
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import {
-  doc, getDoc, setDoc, updateDoc
+  doc, getDoc, setDoc, updateDoc, arrayUnion
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-// Identificador de página basado en el nombre del archivo
-const pageId = location.pathname.split('/').pop().replace('.html', '') || 'index';
+// Identificador de página: se puede sobreescribir con window._pageId antes de cargar este módulo
+const pageId = window._pageId || (location.pathname.split('/').pop().replace('.html', '') || 'index');
 
 // ── Estilos ────────────────────────────────────────────────────────────────
 const style = document.createElement('style');
@@ -152,13 +152,14 @@ function friendlyError(code) {
 
 // ── Firestore: guardar progreso ────────────────────────────────────────────
 async function markDone(uid, page, idx) {
-  const ref = doc(db, 'users', uid);
+  const ref   = doc(db, 'users', uid);
   const field = `progress.${page}.${idx}`;
+  const today = new Date().toISOString().slice(0, 10);
   try {
-    await updateDoc(ref, { [field]: true });
+    await updateDoc(ref, { [field]: true, activityDates: arrayUnion(today) });
   } catch {
     // El documento no existe aún — crearlo
-    await setDoc(ref, { progress: { [page]: { [idx]: true } } });
+    await setDoc(ref, { progress: { [page]: { [idx]: true } }, activityDates: [today] });
   }
 }
 

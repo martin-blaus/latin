@@ -29,6 +29,17 @@
   .desc { font-size: 12.5px; color: #555; line-height: 1.6; margin-bottom: 14px; }
   .go { font-size: 12px; color: #185FA5; font-weight: 500; }
   .intro-note { background: #f7f7f5; border-left: 2px solid #378ADD; padding: 10px 14px; font-size: 12px; color: #555; margin-bottom: 2rem; line-height: 1.6; border-radius: 0 6px 6px 0; }
+  .section-title { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 1rem; margin-top: 2.5rem; border-top: 0.5px solid rgba(0,0,0,0.1); padding-top: 1.5rem; }
+  .nouns-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; }
+  .noun-chip { background: #ffffff; border: 0.5px solid rgba(0,0,0,0.15); border-radius: 10px; padding: 10px 12px; text-decoration: none; color: inherit; display: block; transition: box-shadow 0.12s; }
+  .noun-chip:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .noun-chip .nc-nom { font-family: Georgia, serif; font-style: italic; font-size: 14px; color: #185FA5; font-weight: 500; display: block; margin-bottom: 2px; }
+  .noun-chip .nc-gen { font-family: Georgia, serif; font-style: italic; font-size: 12px; color: #888; display: block; margin-bottom: 4px; }
+  .noun-chip .nc-sign { font-size: 11px; color: #555; }
+  .noun-chip .nc-badge { display: inline-block; font-size: 10px; font-weight: 500; padding: 1px 6px; border-radius: 5px; margin-top: 5px; }
+  .dec-group-label { font-size: 11px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; margin-top: 1.25rem; }
+  .dec-group-label:first-child { margin-top: 0; }
+  #nouns-loading { font-size: 13px; color: #888; }
 </style>
 </head>
 <body>
@@ -109,6 +120,68 @@
       </div>
     </a>
   </div>
+
+  <!-- Biblioteca de sustantivos -->
+  <h2 class="section-title">Práctica por sustantivo</h2>
+  <div id="nouns-loading">Cargando sustantivos…</div>
+  <div id="nouns-library" hidden></div>
+
 </div>
+
+<script type="module">
+import { db } from './firebase-config.js';
+import { collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { NOUNS } from './nouns-data.js';
+
+const DEC_LABEL = { 1: '1ª declinación', 2: '2ª declinación', 3: '3ª declinación' };
+const DEC_BADGE_COLORS = {
+  1: 'background:#E1F5EE;color:#085041',
+  2: 'background:#E6F1FB;color:#0C447C',
+  3: 'background:#FAECE7;color:#712B13',
+};
+const GENUS = { m: 'masc.', f: 'fem.', n: 'n.' };
+
+async function loadNouns() {
+  let nouns = [];
+  try {
+    const snap = await getDocs(collection(db, 'nouns'));
+    if (!snap.empty) {
+      nouns = snap.docs.map(d => d.data());
+    }
+  } catch (_) { /* sin permisos o sin conexión */ }
+
+  // Fallback a datos locales si Firestore vacío
+  if (nouns.length === 0) nouns = NOUNS;
+
+  nouns.sort((a, b) => a.dec - b.dec || a.nom.localeCompare(b.nom));
+
+  const groups = {};
+  for (const n of nouns) {
+    if (!groups[n.dec]) groups[n.dec] = [];
+    groups[n.dec].push(n);
+  }
+
+  const html = [1, 2, 3].filter(d => groups[d]).map(d => `
+    <p class="dec-group-label">${DEC_LABEL[d]}</p>
+    <div class="nouns-grid">
+      ${groups[d].map(n => `
+        <a href="declinacion.html?nomen=${n.id}" class="noun-chip">
+          <span class="nc-nom">${n.nom}</span>
+          <span class="nc-gen">${n.gen}</span>
+          <span class="nc-sign">${n.sign}</span>
+          <span class="nc-badge" style="${DEC_BADGE_COLORS[n.dec]}">${GENUS[n.genus] || n.genus}</span>
+        </a>
+      `).join('')}
+    </div>
+  `).join('');
+
+  document.getElementById('nouns-loading').hidden = true;
+  const lib = document.getElementById('nouns-library');
+  lib.innerHTML = html;
+  lib.hidden = false;
+}
+
+loadNouns();
+</script>
 </body>
 </html>

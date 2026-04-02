@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Declinación — Latín</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #ffffff; color: #1a1a1a; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .wrap { padding: 1rem 0; }
+  .meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .badge { padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 500; }
+  .b-teal   { background: #E1F5EE; color: #085041; }
+  .b-blue   { background: #E6F1FB; color: #0C447C; }
+  .b-coral  { background: #FAECE7; color: #712B13; }
+  .b-purple { background: #EEEDFE; color: #3C3489; }
+  .b-amber  { background: #FAEEDA; color: #633806; }
+  .b-slate  { background: #ECEDF3; color: #353D5E; }
+  .card { background: #ffffff; border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; }
+  .card-head { background: #f7f7f5; border-bottom: 0.5px solid rgba(0,0,0,0.12); padding: 10px 16px; }
+  .card-head h3 { margin: 0; font-size: 15px; font-weight: 500; color: #1a1a1a; }
+  .card-head p { margin: 2px 0 0; font-size: 12px; color: #666; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f7f7f5; color: #666; font-weight: 500; padding: 8px 12px; text-align: left; border-bottom: 0.5px solid rgba(0,0,0,0.12); }
+  td { padding: 8px 12px; border-bottom: 0.5px solid rgba(0,0,0,0.1); color: #1a1a1a; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .caso { color: #888; font-size: 12px; }
+  .forma { font-family: Georgia, serif; font-style: italic; color: #185FA5; font-weight: 500; }
+  .fn { color: #888; font-size: 12px; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 14px; color: #666; margin-bottom: 1.5rem; }
+  .nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 1.75rem; }
+  .nav-link { font-size: 12px; color: #185FA5; text-decoration: none; padding: 4px 10px; border-radius: 6px; border: 0.5px solid rgba(0,0,0,0.15); }
+  .nav-link:hover { background: #E6F1FB; }
+  .nav-link.active { background: #E6F1FB; font-weight: 500; pointer-events: none; }
+  .nav-sep { color: #ccc; font-size: 12px; }
+  .ejercicios { margin-top: 2.5rem; border-top: 0.5px solid rgba(0,0,0,0.1); padding-top: 1.5rem; }
+  .ejercicios-titulo { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 1rem; }
+  .ejercicio-card { border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; margin-bottom: 0.75rem; }
+  .ejercicio-head { background: #f7f7f5; border-bottom: 0.5px solid rgba(0,0,0,0.12); padding: 7px 14px; }
+  .ejercicio-head span { font-size: 11px; font-weight: 500; color: #888; }
+  .ejercicio-body { padding: 12px 14px; }
+  .ejercicio-p { font-size: 13px; color: #1a1a1a; line-height: 1.7; margin-bottom: 10px; }
+  .ejercicio-p em { font-family: Georgia, serif; }
+  .ejercicio-p strong { color: #185FA5; }
+  .btn-sol { font-size: 12px; color: #185FA5; background: #E6F1FB; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer; font-family: inherit; font-weight: 500; }
+  .btn-sol:hover { background: #d0e6f7; }
+  .solucion { display: none; margin-top: 10px; background: #f7f7f5; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; color: #333; line-height: 1.7; border-left: 2px solid #378ADD; }
+  .solucion em { font-family: Georgia, serif; font-style: italic; }
+  .sol-hl { color: #185FA5; font-weight: 500; }
+  .nota-box { background: #f7f7f5; border-left: 2px solid #378ADD; padding: 10px 14px; font-size: 12px; color: #555; margin-bottom: 1.5rem; line-height: 1.6; border-radius: 0 6px 6px 0; }
+  .error-box { background: #FAECE7; border-left: 2px solid #C84B2C; padding: 14px 16px; border-radius: 0 8px 8px 0; margin-top: 2rem; }
+  .error-box h2 { font-size: 15px; font-weight: 500; color: #712B13; margin-bottom: 4px; }
+  .error-box p { font-size: 13px; color: #8B3820; }
+  #loading { font-size: 13px; color: #888; padding: 2rem 0; }
+  /* Tabla comparada sg / pl */
+  .table-wrap { overflow-x: auto; }
+  .dec-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .dec-table th { background: #f7f7f5; color: #666; font-weight: 500; padding: 8px 14px; text-align: left; border-bottom: 0.5px solid rgba(0,0,0,0.12); }
+  .dec-table td { padding: 9px 14px; border-bottom: 0.5px solid rgba(0,0,0,0.08); vertical-align: middle; }
+  .dec-table tr:last-child td { border-bottom: none; }
+  .dec-table .td-caso { color: #888; font-size: 12px; width: 120px; }
+  .dec-table .td-fn { color: #aaa; font-size: 11px; padding-left: 0; }
+  .dec-table .forma-sg { font-family: Georgia, serif; font-style: italic; color: #185FA5; font-weight: 500; }
+  .dec-table .forma-pl { font-family: Georgia, serif; font-style: italic; color: #3C3489; font-weight: 500; }
+  .homonym-tag { font-size: 10px; background: #FAEEDA; color: #633806; border-radius: 4px; padding: 1px 5px; margin-left: 5px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-link">← Inicio</a>
+    <span class="nav-sep">|</span>
+    <a href="primera_declinacion_rosa.html" class="nav-link">1ª — rosa, rosae</a>
+    <a href="segunda_declinacion_lupus.html" class="nav-link">2ª — lupus, lupi</a>
+    <a href="tercera_declinacion_rex.html" class="nav-link">3ª — rex, regis</a>
+    <a href="casos.html" class="nav-link">Casos</a>
+    <a href="panel.html" class="nav-link">Panel</a>
+  </nav>
+
+  <div id="loading">Cargando sustantivo…</div>
+  <div id="content" hidden></div>
+</div>
+
+<!-- Establecer pageId por sustantivo ANTES de importar auth-ui.js -->
+<script>
+  (function () {
+    const nomen = new URLSearchParams(location.search).get('nomen') || '';
+    window._pageId = nomen ? 'dec_' + nomen : 'declinacion';
+  })();
+</script>
+<script type="module">
+import { db } from './firebase-config.js';
+import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { NOUNS_BY_ID } from './nouns-data.js';
+
+const CASOS_ES = {
+  nom: 'Nominativo',
+  gen: 'Genitivo',
+  dat: 'Dativo',
+  acc: 'Acusativo',
+  abl: 'Ablativo',
+  voc: 'Vocativo',
+};
+
+const FUNCIONES = {
+  nom: 'sujeto o predicado nominal',
+  gen: 'complemento del nombre (posesión)',
+  dat: 'objeto indirecto',
+  acc: 'objeto directo o dirección',
+  abl: 'circunstancial, instrumento, agente pasivo',
+  voc: 'interpelación directa',
+};
+
+const DEC_LABEL = { 1: 'Primera declinación', 2: 'Segunda declinación', 3: 'Tercera declinación' };
+const GENUS_LABEL = { m: 'masculino', f: 'femenino', n: 'neutro' };
+const SUBTYPE_LABEL = {
+  null: null, 'er': 'tema en -er', 'impar': 'imparisílabo', 'par': 'parisílabo', 'neutro': 'neutro',
+};
+
+// ── Carga el sustantivo ─────────────────────────────────────────────────────
+async function loadNoun(id) {
+  if (!id) return null;
+  // Intentar Firestore primero
+  try {
+    const snap = await getDoc(doc(db, 'nouns', id));
+    if (snap.exists()) return snap.data();
+  } catch (_) { /* sin conexión o sin permisos → fallback */ }
+  // Fallback a datos locales
+  return NOUNS_BY_ID[id] || null;
+}
+
+// ── Detecta formas homónimas ────────────────────────────────────────────────
+function homonyms(noun) {
+  const map = {};
+  for (const num of ['sg', 'pl']) {
+    for (const [cas, form] of Object.entries(noun[num])) {
+      const key = form.toLowerCase();
+      if (!map[key]) map[key] = [];
+      map[key].push({ cas, num, label: `${CASOS_ES[cas]} ${num === 'sg' ? 'sg.' : 'pl.'}` });
+    }
+  }
+  return Object.entries(map)
+    .filter(([, entries]) => entries.length > 1)
+    .map(([form, entries]) => ({ form, entries }));
+}
+
+// ── Genera los 5 ejercicios ─────────────────────────────────────────────────
+function buildExercises(noun) {
+  const homs = homonyms(noun);
+
+  const exs = [
+    {
+      title: 'Ejercicio 1 — Acusativo singular',
+      q: `¿Cuál es el <strong>acusativo singular</strong> de <em>${noun.nom}, ${noun.gen}</em> ("${noun.sign}")? ¿Qué función expresa este caso?`,
+      a: `<span class="sol-hl">${noun.sg.acc}</span> · acusativo singular · indica el ${FUNCIONES.acc}.`,
+    },
+    {
+      title: 'Ejercicio 2 — Genitivo plural',
+      q: `Da el <strong>genitivo plural</strong> de <em>${noun.nom}</em>. ¿Cuál es su terminación característica en esta declinación?`,
+      a: `<span class="sol-hl">${noun.pl.gen}</span> · genitivo plural · indica el ${FUNCIONES.gen}.` +
+         (noun.dec === 3 && noun.subtype === 'par'
+           ? ' Terminación <em>-ium</em> propia de los parisílabos de 3ª declinación.'
+           : noun.dec === 3
+           ? ' Terminación <em>-um</em> propia de los imparisílabos de 3ª declinación.'
+           : ''),
+    },
+    {
+      title: 'Ejercicio 3 — Dativo singular',
+      q: `¿Cuál es el <strong>dativo singular</strong> de <em>${noun.nom}</em>? ¿En qué situaciones se usa el dativo?`,
+      a: `<span class="sol-hl">${noun.sg.dat}</span> · dativo singular · se usa como ${FUNCIONES.dat}.`,
+    },
+    {
+      title: 'Ejercicio 4 — Ablativo singular',
+      q: `¿Cuál es el <strong>ablativo singular</strong> de <em>${noun.nom}</em>? Menciona dos usos típicos del ablativo.`,
+      a: `<span class="sol-hl">${noun.sg.abl}</span> · ablativo singular · expresa el ${FUNCIONES.abl}.`,
+    },
+  ];
+
+  // Ejercicio 5: formas homónimas o vocativo
+  if (homs.length > 0) {
+    const h = homs[0];
+    const labelsList = h.entries.map(e => `<em>${CASOS_ES[e.cas].toLowerCase()} ${e.num === 'sg' ? 'sg.' : 'pl.'}</em>`).join(' y ');
+    exs.push({
+      title: 'Ejercicio 5 — Formas homónimas',
+      q: `La forma <strong><em>${h.form}</em></strong> de <em>${noun.nom}</em> aparece en más de un caso. ¿Cuáles? ¿Cómo las distingues en una oración?`,
+      a: `<span class="sol-hl">${h.form}</span> puede ser ${labelsList}. Se distinguen por la <strong>función sintáctica</strong> en la oración y por el contexto verbal.`,
+    });
+  } else {
+    exs.push({
+      title: 'Ejercicio 5 — Vocativo',
+      q: `¿Cuál es el <strong>vocativo singular</strong> de <em>${noun.nom}</em>? ¿En qué se diferencia del nominativo?`,
+      a: noun.sg.voc === noun.sg.nom
+        ? `<span class="sol-hl">${noun.sg.voc}</span> · vocativo singular · <strong>idéntico al nominativo</strong>. Solo los masculinos de 2ª en <em>-us</em> tienen vocativo distinto (<em>-e</em>).`
+        : `<span class="sol-hl">${noun.sg.voc}</span> · vocativo singular · <strong>distinto del nominativo</strong> (${noun.sg.nom}). Este cambio es propio de los sustantivos masculinos de 2ª declinación en <em>-us</em>.`,
+    });
+  }
+
+  return exs;
+}
+
+// ── Construye las insignias de declinación ──────────────────────────────────
+function buildBadges(noun) {
+  const badges = [];
+  const decColors = { 1: 'b-teal', 2: 'b-blue', 3: 'b-coral' };
+  badges.push(`<span class="badge ${decColors[noun.dec] || 'b-blue'}">${DEC_LABEL[noun.dec] || `${noun.dec}ª dec.`}</span>`);
+  badges.push(`<span class="badge b-slate">Género ${GENUS_LABEL[noun.genus] || noun.genus}</span>`);
+  if (noun.subtype && noun.subtype !== 'neutro') {
+    badges.push(`<span class="badge b-amber">${SUBTYPE_LABEL[noun.subtype] || noun.subtype}</span>`);
+  }
+  badges.push(`<span class="badge b-purple"><em>${noun.nom}, ${noun.gen}</em></span>`);
+  return badges.join('');
+}
+
+// ── Renderiza la tabla de declinación ──────────────────────────────────────
+function buildTable(noun) {
+  const homs = homonyms(noun);
+  const homForms = new Set(homs.map(h => h.form.toLowerCase()));
+
+  const rows = ['nom', 'gen', 'dat', 'acc', 'abl', 'voc'].map(cas => {
+    const sg = noun.sg[cas];
+    const pl = noun.pl[cas];
+    const sgHom = homForms.has(sg.toLowerCase()) ? '<span class="homonym-tag">≡</span>' : '';
+    const plHom = homForms.has(pl.toLowerCase()) ? '<span class="homonym-tag">≡</span>' : '';
+    const fn = FUNCIONES[cas];
+    return `<tr>
+      <td><span class="td-caso">${CASOS_ES[cas]}</span></td>
+      <td><span class="forma-sg">${sg}</span>${sgHom}</td>
+      <td><span class="forma-pl">${pl}</span>${plHom}</td>
+      <td class="td-fn">${fn}</td>
+    </tr>`;
+  }).join('');
+
+  return `
+    <div class="table-wrap">
+      <table class="dec-table">
+        <tr>
+          <th style="width:22%">Caso</th>
+          <th style="width:22%">Singular</th>
+          <th style="width:22%">Plural</th>
+          <th>Función principal</th>
+        </tr>
+        ${rows}
+      </table>
+    </div>
+    ${homs.length > 0 ? '<p style="font-size:11px;color:#888;margin-top:8px;"><span class="homonym-tag">≡</span> La forma es homónima de otro caso — lee el contexto para distinguirla.</p>' : ''}
+  `;
+}
+
+// ── Renderiza todo el contenido ────────────────────────────────────────────
+function render(noun) {
+  const exs = buildExercises(noun);
+  const exercisesHtml = exs.map((ex, i) => `
+    <div class="ejercicio-card">
+      <div class="ejercicio-head"><span>${ex.title}</span></div>
+      <div class="ejercicio-body">
+        <p class="ejercicio-p">${ex.q}</p>
+        <button class="btn-sol" onclick="toggleSolucion(this)">Ver solución</button>
+        <div class="solucion">${ex.a}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const notaHtml = noun.nota
+    ? `<div class="nota-box">${noun.nota}</div>`
+    : '';
+
+  document.getElementById('content').innerHTML = `
+    <h1>Declinación de <em>${noun.nom}, ${noun.gen}</em></h1>
+    <p class="subtitle">${noun.sign} · ${DEC_LABEL[noun.dec]}</p>
+    <div class="meta">${buildBadges(noun)}</div>
+    ${notaHtml}
+    <div class="card">
+      <div class="card-head">
+        <h3>Tabla completa</h3>
+        <p>Singular (azul) · Plural (morado)</p>
+      </div>
+      ${buildTable(noun)}
+    </div>
+    <div class="ejercicios">
+      <h2 class="ejercicios-titulo">Ejercicios</h2>
+      ${exercisesHtml}
+    </div>
+  `;
+  document.title = `${noun.nom}, ${noun.gen} — Declinación Latina`;
+}
+
+// ── Inicialización ──────────────────────────────────────────────────────────
+const nomenId = new URLSearchParams(location.search).get('nomen');
+
+if (!nomenId) {
+  document.getElementById('loading').innerHTML = '';
+  document.getElementById('content').hidden = false;
+  document.getElementById('content').innerHTML = `
+    <div class="error-box">
+      <h2>Falta el parámetro <code>nomen</code></h2>
+      <p>Accede desde <a href="index.html">la página principal</a> o añade <code>?nomen=rosa</code> a la URL.</p>
+    </div>`;
+} else {
+  loadNoun(nomenId).then(noun => {
+    document.getElementById('loading').innerHTML = '';
+    document.getElementById('content').hidden = false;
+    if (!noun) {
+      document.getElementById('content').innerHTML = `
+        <div class="error-box">
+          <h2>Sustantivo no encontrado: "${nomenId}"</h2>
+          <p>Comprueba la URL o <a href="index.html">vuelve al inicio</a>.</p>
+        </div>`;
+    } else {
+      render(noun);
+    }
+  });
+}
+</script>
+<script type="module" src="auth-ui.js"></script>
+</body>
+</html>

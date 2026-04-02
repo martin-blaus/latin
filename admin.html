@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Sustantivos</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #ffffff; color: #1a1a1a; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .wrap { padding: 1rem 0; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 14px; color: #666; margin-bottom: 2rem; }
+  .nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 1.75rem; }
+  .nav-link { font-size: 12px; color: #185FA5; text-decoration: none; padding: 4px 10px; border-radius: 6px; border: 0.5px solid rgba(0,0,0,0.15); }
+  .nav-link:hover { background: #E6F1FB; }
+  .section { margin-bottom: 2rem; }
+  .section-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin-bottom: 1rem; }
+  .btn { font-size: 13px; font-weight: 500; padding: 8px 18px; border-radius: 8px; border: none; cursor: pointer; font-family: inherit; }
+  .btn-primary { background: #185FA5; color: #fff; }
+  .btn-primary:hover { background: #0C447C; }
+  .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+  .btn-danger { background: #FAECE7; color: #712B13; border: 0.5px solid rgba(113,43,19,0.2); }
+  .btn-danger:hover { background: #f5d8cf; }
+  .log { background: #f7f7f5; border: 0.5px solid rgba(0,0,0,0.12); border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #444; line-height: 1.8; min-height: 60px; max-height: 300px; overflow-y: auto; white-space: pre-wrap; font-family: monospace; margin-top: 12px; }
+  .log .ok  { color: #085041; }
+  .log .err { color: #712B13; }
+  .log .info { color: #0C447C; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f7f7f5; color: #666; font-weight: 500; padding: 8px 12px; text-align: left; border-bottom: 0.5px solid rgba(0,0,0,0.12); }
+  td { padding: 8px 12px; border-bottom: 0.5px solid rgba(0,0,0,0.08); color: #1a1a1a; }
+  tr:last-child td { border-bottom: none; }
+  td em { font-family: Georgia, serif; font-style: italic; color: #185FA5; }
+  .card { background: #ffffff; border: 0.5px solid rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; }
+  .card-head { background: #f7f7f5; border-bottom: 0.5px solid rgba(0,0,0,0.12); padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .card-head h3 { margin: 0; font-size: 14px; font-weight: 500; }
+  .badge { padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 500; }
+  .b-teal { background: #E1F5EE; color: #085041; }
+  .b-blue { background: #E6F1FB; color: #0C447C; }
+  .b-coral { background: #FAECE7; color: #712B13; }
+  #auth-status { font-size: 13px; color: #555; padding: 10px 0; }
+  .warn { background: #FAEEDA; border-left: 2px solid #D97706; padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 12.5px; color: #633806; margin-bottom: 1.5rem; }
+  #nouns-table-wrap { overflow-x: auto; }
+  .link-btn { font-size: 12px; color: #185FA5; text-decoration: none; padding: 3px 8px; border-radius: 5px; background: #E6F1FB; }
+  .link-btn:hover { background: #d0e6f7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-link">← Inicio</a>
+    <a href="panel.html" class="nav-link">Panel</a>
+  </nav>
+
+  <h1>Administración de sustantivos</h1>
+  <p class="subtitle">Gestiona los sustantivos almacenados en Firestore</p>
+
+  <div class="warn">
+    Esta página requiere estar autenticado. Los cambios se escriben directamente en Firestore.
+    Las reglas de seguridad deben permitir escritura a usuarios autenticados en la colección <code>nouns</code>.
+  </div>
+
+  <div id="auth-status">Verificando sesión…</div>
+
+  <!-- Seed section -->
+  <div class="card section" id="seed-section">
+    <div class="card-head">
+      <h3>Cargar sustantivos iniciales</h3>
+      <span id="local-count" class="badge b-blue">— sustantivos locales</span>
+    </div>
+    <div style="padding: 14px 16px;">
+      <p style="font-size:13px;color:#555;margin-bottom:12px;line-height:1.6;">
+        Escribe todos los sustantivos de <code>nouns-data.js</code> en Firestore.
+        Si un sustantivo ya existe, lo sobreescribe con los datos actuales.
+      </p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button id="btn-seed" class="btn btn-primary" disabled>Cargar todos los sustantivos</button>
+        <button id="btn-check" class="btn" style="background:#f7f7f5;border:0.5px solid rgba(0,0,0,0.15);">Verificar Firestore</button>
+      </div>
+      <div id="seed-log" class="log">Esperando acción…</div>
+    </div>
+  </div>
+
+  <!-- Nouns list -->
+  <div class="card">
+    <div class="card-head">
+      <h3>Sustantivos en Firestore</h3>
+      <span id="fs-count" class="badge b-teal">— en DB</span>
+    </div>
+    <div id="nouns-table-wrap">
+      <table>
+        <tr>
+          <th>Sustantivo</th>
+          <th>Gen.</th>
+          <th>Género</th>
+          <th>Dec.</th>
+          <th>Significado</th>
+          <th></th>
+        </tr>
+        <tbody id="nouns-tbody">
+          <tr><td colspan="6" style="color:#888;font-size:12px;padding:14px 12px;">Cargando…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { auth, db } from './firebase-config.js';
+import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import {
+  collection, getDocs, doc, setDoc
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { NOUNS } from './nouns-data.js';
+
+const GENUS = { m: 'masc.', f: 'fem.', n: 'neutro' };
+const DEC = { 1: '1ª', 2: '2ª', 3: '3ª' };
+
+document.getElementById('local-count').textContent = `${NOUNS.length} sustantivos locales`;
+
+// ── Auth ──────────────────────────────────────────────────────────────────
+onAuthStateChanged(auth, user => {
+  const statusEl = document.getElementById('auth-status');
+  const seedBtn  = document.getElementById('btn-seed');
+  if (user) {
+    statusEl.innerHTML = `<span style="color:#085041;font-weight:500;">✓ Sesión activa:</span> ${user.email}`;
+    seedBtn.disabled = false;
+  } else {
+    statusEl.innerHTML = `<span style="color:#712B13;">Sin sesión.</span> Inicia sesión desde <a href="index.html">la página principal</a> y vuelve aquí.`;
+    seedBtn.disabled = true;
+  }
+});
+
+// ── Cargar lista desde Firestore ──────────────────────────────────────────
+async function loadFirestoreNouns() {
+  const tbody = document.getElementById('nouns-tbody');
+  try {
+    const snap = await getDocs(collection(db, 'nouns'));
+    document.getElementById('fs-count').textContent = `${snap.size} en DB`;
+    if (snap.empty) {
+      tbody.innerHTML = '<tr><td colspan="6" style="color:#888;font-size:12px;padding:14px 12px;">Sin sustantivos en Firestore. Usa "Cargar todos" para inicializar.</td></tr>';
+      return;
+    }
+    const sorted = snap.docs.map(d => d.data()).sort((a, b) => a.dec - b.dec || a.id.localeCompare(b.id));
+    tbody.innerHTML = sorted.map(n => `
+      <tr>
+        <td><em>${n.nom}</em></td>
+        <td><em>${n.gen}</em></td>
+        <td>${GENUS[n.genus] || n.genus}</td>
+        <td>${DEC[n.dec] || n.dec}</td>
+        <td style="color:#555;font-size:12px;">${n.sign || '—'}</td>
+        <td><a class="link-btn" href="declinacion.html?nomen=${n.id}">Ver →</a></td>
+      </tr>
+    `).join('');
+  } catch (e) {
+    tbody.innerHTML = `<tr><td colspan="6" style="color:#712B13;font-size:12px;padding:14px 12px;">Error al leer Firestore: ${e.message}</td></tr>`;
+    document.getElementById('fs-count').textContent = 'Error';
+  }
+}
+
+// ── Verificar Firestore ───────────────────────────────────────────────────
+document.getElementById('btn-check').addEventListener('click', async () => {
+  const log = document.getElementById('seed-log');
+  log.innerHTML = '<span class="info">Consultando Firestore…</span>\n';
+  await loadFirestoreNouns();
+  const snap = await getDocs(collection(db, 'nouns')).catch(e => ({ size: 0, error: e }));
+  if (snap.error) {
+    log.innerHTML += `<span class="err">Error: ${snap.error.message}</span>`;
+  } else {
+    log.innerHTML += `<span class="ok">✓ ${snap.size} sustantivo(s) encontrado(s) en Firestore.</span>`;
+  }
+});
+
+// ── Seed ──────────────────────────────────────────────────────────────────
+document.getElementById('btn-seed').addEventListener('click', async () => {
+  const log = document.getElementById('seed-log');
+  const btn = document.getElementById('btn-seed');
+  btn.disabled = true;
+  btn.textContent = 'Cargando…';
+  log.innerHTML = '';
+
+  let ok = 0, errors = 0;
+  for (const noun of NOUNS) {
+    try {
+      await setDoc(doc(db, 'nouns', noun.id), noun);
+      log.innerHTML += `<span class="ok">✓ ${noun.nom}, ${noun.gen}</span>\n`;
+      ok++;
+    } catch (e) {
+      log.innerHTML += `<span class="err">✗ ${noun.nom}: ${e.message}</span>\n`;
+      errors++;
+    }
+    log.scrollTop = log.scrollHeight;
+  }
+
+  log.innerHTML += `\n<span class="${errors ? 'err' : 'ok'}">${ok} escritos · ${errors} errores</span>`;
+  btn.disabled = false;
+  btn.textContent = 'Cargar todos los sustantivos';
+  await loadFirestoreNouns();
+});
+
+// Carga inicial
+loadFirestoreNouns();
+</script>
+</body>
+</html>
